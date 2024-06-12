@@ -1,0 +1,3 @@
+loadfile /home/ngothanhnha/workspace/template-stk-py32f002/application/build/template-stk-py32f002.bin 0x08000000 reset
+reset
+exit
