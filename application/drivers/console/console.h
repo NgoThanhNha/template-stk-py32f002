@@ -12,7 +12,8 @@
  extern "C" {
 #endif 
 
-#include <stdint.h>
+#include "io_cfg.h"
+#include "xprintf.h"
 
 #define DBG_EN          (1)
 

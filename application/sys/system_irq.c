@@ -14,6 +14,9 @@
 #include "io_cfg.h"
 #include "platform.h"
 #include "sys_ctrl.h"
+
+#include "bsp.h"
+#include "button.h"
 #include "led.h"
 
 void default_handler() {
@@ -40,4 +43,7 @@ void system_tick_handler() {
 	timer_tick(1);
 	system_tick_delay_counter++;
 	led_polling(&led_life);
+	button_polling(&button_up);
+	button_polling(&button_down);
+	button_polling(&button_mode);
 }

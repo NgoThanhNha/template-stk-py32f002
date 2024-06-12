@@ -6,8 +6,6 @@
 **/
 
 #include "console.h"
-#include "io_cfg.h"
-#include "xprintf.h"
 
 void console_init() {
     #if DBG_EN

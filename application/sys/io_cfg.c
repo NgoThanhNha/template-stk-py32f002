@@ -14,7 +14,6 @@
 #include "py32f0xx_ll_usart.h"
 
 #include "sys_ctrl.h"
-#include "console.h"
 
 void led_life_init() {
     LL_GPIO_InitTypeDef GPIO_InitStructure;
@@ -35,6 +34,72 @@ void led_life_on() {
 
 void led_life_off() {
     LL_GPIO_SetOutputPin(LED_LIFE_IO_PORT, LED_LIFE_IO_PIN);
+}
+
+void button_up_init() {
+    LL_GPIO_InitTypeDef GPIO_InitStruct;
+
+    /* gpio clock enable */
+    LL_IOP_GRP1_EnableClock(BUTTON_UP_IO_CLOCK);
+
+    /* gpio structure for initialize */
+    GPIO_InitStruct.Pin = BUTTON_UP_IO_PIN;
+    GPIO_InitStruct.Mode = LL_GPIO_MODE_INPUT;
+    GPIO_InitStruct.Pull = LL_GPIO_PULL_UP;
+    LL_GPIO_Init(BUTTON_UP_IO_PORT, &GPIO_InitStruct);
+}
+
+void button_down_init() {
+    LL_GPIO_InitTypeDef GPIO_InitStruct;
+
+    /* gpio clock enable */
+    LL_IOP_GRP1_EnableClock(BUTTON_DOWN_IO_CLOCK);
+
+    /* gpio structure for initialize */
+    GPIO_InitStruct.Pin = BUTTON_DOWN_IO_PIN;
+    GPIO_InitStruct.Mode = LL_GPIO_MODE_INPUT;
+    GPIO_InitStruct.Pull = LL_GPIO_PULL_UP;
+    LL_GPIO_Init(BUTTON_DOWN_IO_PORT, &GPIO_InitStruct);
+}
+
+void button_mode_init() {
+    LL_GPIO_InitTypeDef GPIO_InitStruct;
+
+    /* gpio clock enable */
+    LL_IOP_GRP1_EnableClock(BUTTON_MODE_IO_CLOCK);
+
+    /* gpio structure for initialize */
+    GPIO_InitStruct.Pin = BUTTON_MODE_IO_PIN;
+    GPIO_InitStruct.Mode = LL_GPIO_MODE_INPUT;
+    GPIO_InitStruct.Pull = LL_GPIO_PULL_UP;
+    LL_GPIO_Init(BUTTON_MODE_IO_PORT, &GPIO_InitStruct);
+}
+
+uint8_t button_up_read() {
+    if (LL_GPIO_IsInputPinSet(BUTTON_UP_IO_PORT, BUTTON_UP_IO_PIN)) {
+        return 0x01;
+    }
+    else {
+        return 0x00;
+    }
+}
+
+uint8_t button_down_read() {
+    if (LL_GPIO_IsInputPinSet(BUTTON_DOWN_IO_PORT, BUTTON_DOWN_IO_PIN)) {
+        return 0x01;
+    }
+    else {
+        return 0x00;
+    }
+}
+
+uint8_t button_mode_read() {
+    if (LL_GPIO_IsInputPinSet(BUTTON_MODE_IO_PORT, BUTTON_MODE_IO_PIN)) {
+        return 0x01;
+    }
+    else {
+        return 0x00;
+    }
 }
 
 void usart1_init() {
@@ -69,6 +134,13 @@ void usart1_put_char(uint8_t _char) {
     LL_USART_TransmitData8(CONSOLE_USART_PORT, _char);
 
     while(LL_USART_IsActiveFlag_TC(CONSOLE_USART_PORT) == RESET);
+}
+
+void usart1_put_string(const char *str) {
+    while (*str) {
+        usart1_put_char((uint8_t)*str);
+        str++;
+    }
 }
 
 void ssd1306_clk_init() {
@@ -116,6 +188,11 @@ void ssd1306_data_digital_write_high() {
 void io_init() {
     /* led life */
     led_life_init();
+
+    /* buttons */
+    button_up_init();
+    button_down_init();
+    button_mode_init();
     
     /* ssd1306 io init */
     ssd1306_clk_init();

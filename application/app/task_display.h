@@ -5,31 +5,28 @@
  ******************************************************************************
 **/
 
-#ifndef __TASK_LIST_H__
-#define __TASK_LIST_H__
+#ifndef __TASK_DISPLAY_H__
+#define __TASK_DISPLAY_H__
 
 #ifdef __cplusplus
  extern "C" {
-#endif 
+#endif
 
+#include <stdio.h>
 #include <stdint.h>
-#include "stk.h"
 
-enum {
-    /* KERNEL TASKS */
-    TASK_TIMER_TICK_ID,
+#include "message.h"
 
-    /* APP TASKS */
-    TASK_DISPLAY_ID,
+#include "ssd1306.h"
+#include "screen_manager.h"
 
-    /* END OF TABLE TASK */
-    STK_EOT_TASK_ID,
-};
 
-extern task_t app_task_table[];
+extern scr_mng_t app_screen;
+extern Adafruit_SSD1306 view_render;
+extern void task_display_handler(stk_msg_t* msg);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* __TASK_LIST_H__ */
+#endif /* __TASK_DISPLAY_H_ */

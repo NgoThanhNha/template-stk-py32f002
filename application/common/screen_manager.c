@@ -11,8 +11,6 @@
 #include "message.h"
 #include "platform.h"
 
-#include "console.h"
-
 static stk_msg_t screen_msg_entry;
 static scr_mng_t* screen_manager = SCREEN_MANAGER_NULL;
 

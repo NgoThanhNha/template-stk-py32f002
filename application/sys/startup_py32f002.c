@@ -12,11 +12,9 @@
 #include "system_irq.h"
 #include "io_cfg.h"
 
-/* user driver */
-#include "console.h"
-
 /* application */
 #include "app.h"
+#include "app_dbg.h"
 
 /* define the addresses of data and bss sections */
 extern uint32_t _sidata, _sdata, _edata, _sbss, _ebss, _estack;
@@ -64,9 +62,6 @@ void reset_handler(void) {
 
     /* uart1 init */
     usart1_init();
-
-    /* console init */
-    console_init();
 
     /* system banner */
     sys_banner();
@@ -121,7 +116,7 @@ __attribute__((section(".isr_vector"))) void (*const g_pfnVectors[])(void) = {
     0,                                              // Reserved
     0,                                              // SPI1
     0,                                              // Reserved
-    0,                                              // USART1
+    default_handler,                                // USART1
     0,                                              // Reserved
     0,                                              // Reserved
     0,                                              // Reserved
@@ -129,10 +124,10 @@ __attribute__((section(".isr_vector"))) void (*const g_pfnVectors[])(void) = {
 };
 
 void sys_banner() {
-    SYS_PRINT("\n");
-    SYS_PRINT(" ___  ____  _  _ \n");
-    SYS_PRINT("/ __)(_  _)( )/ )\n");
-    SYS_PRINT("\\__ \\  )(  (   (\n");
-    SYS_PRINT("(___/ (__) (_)\\_)\n");
-    SYS_PRINT("\n");
+    SYS_PRINTLN("\n");
+    SYS_PRINTLN(" ___  ____  _  _ ");
+    SYS_PRINTLN("/ __)(_  _)( )/ )");
+    SYS_PRINTLN("\\__ \\  )(  (   (");
+    SYS_PRINTLN("(___/ (__) (_)\\_)");
+    SYS_PRINTLN("\n");
 }

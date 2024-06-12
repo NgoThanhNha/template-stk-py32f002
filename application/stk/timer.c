@@ -10,8 +10,6 @@
 #include "platform.h"
 #include "task_list.h"
 
-#include "console.h"
-
 /* define message data is transfered between interrupt heart beat and timer task */
 struct stk_timer_payload_irq_t {
 	uint32_t counter;

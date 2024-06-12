@@ -19,11 +19,9 @@
 #define EXIT_CRITICAL()             enable_interrupts()
 
 #if RELEASE_EN
-#define FATAL(str, id)
-
+    #define FATAL(str, id)
 #else
-#define FATAL(str, id) fatal_error(str, id)
-
+    #define FATAL(str, id) fatal_error(str, id)
 #endif
 
 extern void enable_interrupts();

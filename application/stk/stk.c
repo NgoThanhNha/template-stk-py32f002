@@ -9,7 +9,7 @@
 #include "message.h"
 
 #include "platform.h"
-#include "console.h"
+#include "app_dbg.h"
 
 #include "task_list.h"
 
@@ -30,9 +30,11 @@ void task_create(task_t* task_table_create) {
     event_signal.qhead = STK_MSG_NULL;
     event_signal.qtail = STK_MSG_NULL;
 
-    SYS_PRINT("Welcome to my application!\n");
-    SYS_PRINT("Application tasks created: %d\n", size_of_task_list);
-    SYS_PRINT("\n");
+    SYS_PRINT("Kernel version: ");
+    SYS_PRINTLN(STK_VERSION);
+    SYS_PRINTLN("Welcome to my application!");
+    SYS_PRINTLN("Author: Nark");
+    SYS_PRINTLN("Date: 12-06-24");
     SYS_PRINT("\n");
 }
 

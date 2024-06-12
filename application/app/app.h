@@ -16,6 +16,11 @@
 
 extern void app();
 
+enum {
+    /* TASK DISPLAY */
+    SIG_SCREEN_UPDATE,
+};
+
 #ifdef __cplusplus
 }
 #endif

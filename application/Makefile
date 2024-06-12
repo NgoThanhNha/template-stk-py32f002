@@ -21,7 +21,6 @@ OBJECTS += $(addprefix $(OBJECTS_DIR)/,$(notdir $(SOURCES:.c=.o)))
 OBJECTS += $(addprefix $(OBJECTS_DIR)/,$(notdir $(SOURCES_CPP:.cpp=.o)))
 
 GCC_PATH		= $(HOME)/workspace/tools/gcc-arm-none-eabi-10.3-2021.10
-PROGRAMER_PATH		= $(HOME)/workspace/tools/STM32CubeProgrammer/bin
 
 # App start address, that need sync with declare in linker file and interrupt vector table.
 APP_START_ADDR_VAL = 0x08000000
@@ -135,13 +134,23 @@ help:
 	$(print) "[make view_sym] view list symbol size"
 	$(print) ""
 
-flash: all
-	@$(Print) "Flashing firmware to MCU..."
-	JLinkExe -device PY32F002 -if SWD -speed 4000 -CommanderScript $(HOME)/workspace/$(NAME_MODULE)/application/sys/jlink-command
+# #For Linux: change the path $(HOME)/workspace/$(NAME_MODULE)/application/sys/jlink-command to match your path
+# flash: all
+# 	@$(Print) "Flashing firmware to MCU..."
+# 	JLinkExe -device PY32F002 -if SWD -speed 4000 -CommanderScript $(HOME)/workspace/$(NAME_MODULE)/application/sys/jlink-command
 
+# clean:
+# 	$(Print) CLEAN $(OBJECTS_DIR) folder
+# 	@rm -rf $(OBJECTS_DIR)
+
+# For Windows: change the path $(HOME)/nark/$(NAME_MODULE)/application/sys/jlink-command to match your path, change change the path D:\nark\template-stk-py32f002\application\build\template-stk-py32f002.bin to match your path
 clean:
 	$(Print) CLEAN $(OBJECTS_DIR) folder
-	@rm -rf $(OBJECTS_DIR)
+	@if exist build (rmdir /s /q $(OBJECTS_DIR) -p)
+
+flash: all
+	@$(Print) "Flashing firmware to MCU..."
+	C:\Program Files\SEGGER\JLink_V796\JLink.exe -device PY32F002 -if SWD -speed 4000 -CommanderScript $(HOME)/nark/$(NAME_MODULE)/application/sys/jlink-command
 
 sym: $(TARGET)
 	$(Print) export object name $(<:.axf=.sym)
